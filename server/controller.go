@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"log"
@@ -12,16 +12,16 @@ type Secret struct {
 	Lifespan  time.Duration
 }
 
-type SecretManager struct {
+type SecretController struct {
 	Secrets        map[string]Secret
 	SecretLifespan time.Duration
 }
 
-func NewSecretManager(lifespan time.Duration) *SecretManager {
-	return &SecretManager{make(map[string]Secret), lifespan}
+func newSecretController(lifespan time.Duration) *SecretController {
+	return &SecretController{make(map[string]Secret), lifespan}
 }
 
-func (sm *SecretManager) isSecretExpired(key string) bool {
+func (sm *SecretController) isSecretExpired(key string) bool {
 	secret, ok := sm.Secrets[key]
 	if ok {
 		isExpired := time.Since(secret.CreatedAt) > secret.Lifespan
@@ -34,7 +34,7 @@ func (sm *SecretManager) isSecretExpired(key string) bool {
 	return false
 }
 
-func (sm *SecretManager) GetSecret(key string) string {
+func (sm *SecretController) GetSecret(key string) string {
 	secret, ok := sm.Secrets[key]
 	log.Printf("GET secret: %s", key)
 	if ok && !sm.isSecretExpired(key) {
@@ -43,13 +43,13 @@ func (sm *SecretManager) GetSecret(key string) string {
 	return ""
 }
 
-func (sm *SecretManager) UpdateSecret(key string, content string) string {
+func (sm *SecretController) UpdateSecret(key string, content string) string {
 	log.Printf("UPDATE secret: %s", key)
 	sm.Secrets[key] = Secret{key, content, time.Now(), sm.SecretLifespan}
 	return content
 }
 
-func (sm *SecretManager) DeleteSecret(key string) string {
+func (sm *SecretController) DeleteSecret(key string) string {
 	log.Printf("DELETE secret: %s", key)
 	_, ok := sm.Secrets[key]
 	if ok {
