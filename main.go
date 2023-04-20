@@ -18,8 +18,8 @@ func main() {
 	})
 	router.Use(gin.Recovery())
 
-	trustedProxies := []string{"127.0.0.1"}
-	router.SetTrustedProxies(trustedProxies)
+	// trustedProxies := []string{"127.0.0.1"}
+	// router.SetTrustedProxies(trustedProxies)
 
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/static", "./static")
@@ -31,7 +31,7 @@ func main() {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 
-	router.Run(":9000")
+	router.Run()
 }
 
 func GetSecretByKey(c *gin.Context) {
