@@ -21,9 +21,15 @@ func main() {
 	trustedProxies := []string{"127.0.0.1"}
 	router.SetTrustedProxies(trustedProxies)
 
-	router.GET("/secret", GetSecretByKey)
-	router.PUT("/secret", UpdateSecret)
-	router.DELETE("/secret", DeleteSecretByKey)
+	router.LoadHTMLGlob("templates/*")
+	router.Static("/static", "./static")
+
+	router.POST("/api/secret", GetSecretByKey)
+	router.PUT("/api/secret", UpdateSecret)
+	router.DELETE("/api/secret", DeleteSecretByKey)
+	router.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", gin.H{})
+	})
 
 	router.Run(":9000")
 }
