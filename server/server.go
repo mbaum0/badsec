@@ -40,8 +40,8 @@ func (server *Server) initRouter() {
 	// trustedProxies := []string{"127.0.0.1"}
 	// router.SetTrustedProxies(trustedProxies)
 
-	router.LoadHTMLGlob("./templates/*")
-	router.Static("./static", "/static")
+	router.LoadHTMLFiles("./templates/index.html")
+	router.Static("/static", "./static")
 
 	router.POST("/api/secret", server.GetSecretByKey)
 	router.PUT("/api/secret", server.UpdateSecret)
