@@ -6,10 +6,11 @@ import (
 )
 
 type Secret struct {
-	Key       string `json:"key"`
-	Content   string `json:"content"`
-	CreatedAt time.Time
-	Lifespan  time.Duration
+	Key          string `json:"key"`
+	Content      string `json:"content"`
+	CreatedAt    time.Time
+	Lifespan     time.Duration
+	DeleteOnRead bool
 }
 
 type SecretController struct {
@@ -37,15 +38,23 @@ func (sm *SecretController) isSecretExpired(key string) bool {
 func (sm *SecretController) GetSecret(key string) string {
 	secret, ok := sm.Secrets[key]
 	log.Printf("GET secret: %s", key)
-	if ok && !sm.isSecretExpired(key) {
-		return secret.Content
+	resp := ""
+	if ok {
+		if !sm.isSecretExpired(key) {
+			resp = secret.Content
+		} else {
+			sm.DeleteSecret(key)
+		}
+		if secret.DeleteOnRead {
+			sm.DeleteSecret(key)
+		}
 	}
-	return ""
+	return resp
 }
 
 func (sm *SecretController) UpdateSecret(key string, content string) string {
 	log.Printf("UPDATE secret: %s", key)
-	sm.Secrets[key] = Secret{key, content, time.Now(), sm.SecretLifespan}
+	sm.Secrets[key] = Secret{key, content, time.Now(), sm.SecretLifespan, true}
 	return content
 }
 

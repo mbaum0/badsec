@@ -18,7 +18,7 @@ type Response struct {
 }
 
 func CreateServer() *Server {
-	server := Server{controller: newSecretController(time.Second * 60)}
+	server := Server{controller: newSecretController(time.Hour * 1)}
 	server.initRouter()
 
 	return &server
