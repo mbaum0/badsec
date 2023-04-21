@@ -1,10 +1,11 @@
 /* Common styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: Helvetica, monospace;
   font-size: 16px;
   color: #333;
   background-color: #fff;
   transition: background-color 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 
 .container {
@@ -15,6 +16,11 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+*:focus{
+  outline: none;
+  border-color:#dc3545;
 }
 
 h1 {
@@ -28,12 +34,11 @@ h6 {
 }
 
 label {
-  font-weight: bold;
+  font-weight: 500;
 }
 
 input[type="text"],
 textarea {
-  appearance: none;
   padding: 8px 12px;
   border: 2px solid #ccc;
   border-radius: 5px;
@@ -69,7 +74,7 @@ textarea#response{
 }
 
 button {
-  border: none;
+  border: 2px solid #fff;
   border-radius: 5px;
   padding: 10px 20px;
   font-size: 16px;
@@ -86,7 +91,7 @@ button {
 
 /* Styling for the set button */
 #set-button {
-  background-color: #dc3545;
+  background-color: goldenrod;
   color: #fff;
 }
 
@@ -159,6 +164,10 @@ button {
 .dark-mode input[type="text"]:focus,
 .dark-mode textarea:focus {
   border-color: #dc3545;
+}
+
+.dark-mode button{
+  border-color: #222;
 }
 
 /* Media queries for mobile devices */
