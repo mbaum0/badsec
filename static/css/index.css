@@ -8,7 +8,7 @@ body {
 }
 
 .container {
-  max-width: min(800px, 100vw);
+  max-width: 800px;
   max-height: 100vh;
   margin: 0 auto;
   padding: 20px;
@@ -31,26 +31,35 @@ label {
   font-weight: bold;
 }
 
-input[type="text"] {
+input[type="text"],
+textarea {
+  appearance: none;
   padding: 8px 12px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 5px;
   margin-top: 10px;
   margin-bottom: 10px;
   width: 100%;
   box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.3s ease;
 }
 
 textarea {
-  width: 100%;
-  max-width: 100%;
-  min-width: 100%;
-  min-height: 40px;
   height: 200px;
-  max-height: 200px;
-  overflow: auto;
-  box-sizing: border-box;
+  overflow-y: auto;
+  resize: none;
+  vertical-align: top;
+}
 
+input[type="text"]:focus,
+textarea:focus {
+  border-color: #dc3545;
+}
+
+textarea#response{
+  pointer-events: none;
+  background-color: #eee;
 }
 
 .buttons-container {
@@ -137,6 +146,21 @@ button {
   transform: translateX(0);
 }
 
+.dark-mode textarea#response{
+  pointer-events: none;
+  background-color: #999;
+}
+
+.dark-mode input[type="text"],
+.dark-mode textarea {
+  border-color: #222;
+}
+
+.dark-mode input[type="text"]:focus,
+.dark-mode textarea:focus {
+  border-color: #dc3545;
+}
+
 /* Media queries for mobile devices */
 @media only screen and (max-width: 600px) {
   .container {
@@ -148,7 +172,8 @@ button {
     font-size: 24px;
   }
 
-  input[type="text"] {
+  input[type="text"],
+  textarea {
     padding: 6px 10px;
     font-size: 14px;
   }

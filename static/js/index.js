@@ -4,6 +4,7 @@ const fetchButton = document.getElementById("fetch-button");
 const setButton = document.getElementById("set-button");
 const keyInput = document.getElementById("key");
 const contentInput = document.getElementById("content");
+const contentResponse = document.getElementById("response")
 const darkModeToggle = document.getElementById("dark-mode-toggle");
 
 fetchButton.addEventListener("click", () => {
@@ -20,11 +21,11 @@ fetchButton.addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(body => {
-            contentInput.value = `${body.content}`;
+            contentResponse.value = `${body.content}`;
         })
         .catch(error => {
             console.error(error);
-            contentInput.value = "An error occurred while fetching the secret.";
+            contentResponse.value = "An error occurred while fetching the secret.";
         });
 });
 
@@ -44,11 +45,11 @@ setButton.addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(body => {
-            contentInput.value = `${body.content}`;
+            contentResponse.value = `${body.content}`;
         })
         .catch(error => {
             console.error(error);
-            contentInput.value = "An error occurred while setting the secret.";
+            contentResponse.value = "An error occurred while setting the secret.";
         });
 });
 
